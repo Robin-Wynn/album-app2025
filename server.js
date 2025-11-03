@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000
 
 // handle security
 const helmet = require('helmet')
-const cors = required('cors')
+const cors = require('cors')
 
 // configuring helmet
 // server.use(helmet())
