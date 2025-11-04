@@ -1,28 +1,24 @@
-const queryAction =(obj, e, r)=> {
+const queryAction =(obj, e, r, t)=> {
 
-    const results = ()=> {
+    if (!e) {
 
-        (error, rows)=> {
+        if (r.length == 1) {
+            res.json(...r)
+        } else {
+            obj.json(r)
+        }
 
-                if (!e) {
-                    if (r.length == 1) {
-                        res.json(...rows)
-                    } else {
-                        res.json(rows)
-                    }
-                } else {
-                    console.log(`Dao Error: ${e}`)
-                    res.json({
-                        "message": 'error',
-                        'table': `${table}`,
-                        'error': error
-                    })
-                }
-            }
+    } else {
 
+        console.log(`Dao Error: ${e}`)
+        res.json({
+            "message": 'error',
+            'table': `${t}`,
+            'error': error
+        })
+        
     }
 
-    return results
 }
 
 module.exports = { 

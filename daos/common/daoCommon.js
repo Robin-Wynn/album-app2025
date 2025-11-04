@@ -1,4 +1,5 @@
 const connect = require('../../config/dbconfig')
+const { queryAction } = require('../../helpers/queryActions')
 
 const daoCommon = {
 
@@ -9,20 +10,7 @@ const daoCommon = {
         connect.query(
             `SELECT * FROM ${table};`,
             (error, rows)=> {
-                if (!error) {
-                    if(rows.length === 1) {
-                        res.json(...rows)
-                    } else {
-                        res.json(rows)
-                    }
-                } else {
-                    console.log(`Dao Error: ${error}`)
-                    res.json({
-                        "message": 'error',
-                        'table': `${table}`,
-                        'error': error
-                    })
-                }
+                queryAction(res, error, rows, table)
             }
         )
     },
@@ -33,16 +21,7 @@ const daoCommon = {
         connect.query(
             `SELECT * FROM ${table} WHERE ${table}_id = ${id};`,
             (error, rows)=> {
-                if(!error) {
-                    res.json(...rows)
-                } else {
-                    console.log(`Dao Error: ${error}`)
-                    res.json({
-                        "message": 'error',
-                        'table': `${table}`,
-                        'error': error
-                    })
-                }
+                queryAction(res, error, rows, table)
             }
         )
     },
@@ -54,14 +33,14 @@ const daoCommon = {
 
             (error, rows)=> {
 
-                if (!error) {
+                 if (!error) {
                     if (rows.length == 1) {
                         res.json(...rows)
                     } else {
                         res.json(rows)
                     }
                 } else {
-                    console.log(`Dao Error: ${error}`)
+                    console.log(`DAO Error: ${error}`)
                     res.json({
                         "message": 'error',
                         'table': `${table}`,
