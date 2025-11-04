@@ -5,6 +5,12 @@ const albumDao = {
     ...require('./api/albumDao')
 }
 
+const artistDao = {
+    ...daoCommon,  //spread operator removes {}
+    ...require('./api/artistDao')
+}
+
 module.exports = {
-    albumDao
+    albumDao,
+    artistDao
 }

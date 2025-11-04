@@ -3,7 +3,7 @@ const queryAction =(obj, e, r, t)=> {
     if (!e) {
 
         if (r.length == 1) {
-            res.json(...r)
+            obj.json(...r)
         } else {
             obj.json(r)
         }
@@ -11,10 +11,10 @@ const queryAction =(obj, e, r, t)=> {
     } else {
 
         console.log(`Dao Error: ${e}`)
-        res.json({
+        obj.json({
             "message": 'error',
             'table': `${t}`,
-            'error': error
+            'error': e
         })
         
     }
