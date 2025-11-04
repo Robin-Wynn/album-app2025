@@ -1,10 +1,11 @@
 const con = require('../../config/dbconfig')
 
-const artistDao = {
-    table: 'artist'
+const labelDao = {
+    table: 'label'
 
     // methods that are particular to the artist table
 
 }
 
-module.exports = artistDao
+
+module.exports = labelDao

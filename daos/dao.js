@@ -10,7 +10,19 @@ const artistDao = {
     ...require('./api/artistDao')
 }
 
+const bandDao = {
+    ...daoCommon,  //spread operator removes {}
+    ...require('./api/bandDao')
+}
+
+const labelDao = {
+    ...daoCommon,  //spread operator removes {}
+    ...require('./api/labelDao')
+}
+
 module.exports = {
     albumDao,
-    artistDao
+    artistDao,
+    bandDao,
+    labelDao
 }
