@@ -11,3 +11,7 @@
 # GET http://localhost:3000/api/artist/sort/fName
 
 # GET http://localhost:3000/api/artist/3
+
+# GET http://localhost:3000/api/album/get_albums/3
+
+GET http://localhost:3000/api/artist/get_albums/3
