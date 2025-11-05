@@ -13,7 +13,7 @@ const artistDao = {
 
         // .execute(query, callback function) <-- mysql2 
         // .execute(query, array, callback function)
-        con.query()
+        con.execute(
             sql,
             (error, rows)=> {
                 if (!error) {
@@ -45,6 +45,7 @@ const artistDao = {
                 }
             }
 
+        ) 
     }
 
 }

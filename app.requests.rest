@@ -14,4 +14,11 @@
 
 # GET http://localhost:3000/api/album/get_albums/3
 
-GET http://localhost:3000/api/artist/get_albums/3
+# GET http://localhost:3000/api/artist/get_albums/3
+
+POST http://localhost:3000/api/artist/create
+Content-Type: application/json
+{
+    "fName": "michael",
+    "lName": "jackson"
+}
