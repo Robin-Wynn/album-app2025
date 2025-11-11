@@ -60,8 +60,13 @@ const daoCommon = {
                 values,
                 (error, dbres)=> {
                     if (!error){
-                        res.json({
-                            Last_id: dbres.insertId
+                        // res.json({
+                        //     Last_id: dbres.insertId
+                        // })
+                        console.log(dbres)
+                        res.render('pages/success', {
+                            title: 'Success',
+                            name: 'Success'
                         })
                     } else {
                         console.log(`${table}Dao error: `, error)
@@ -115,6 +120,34 @@ const daoCommon = {
                 }
             )
         }
+    },
+
+    /** DANGER ZONE!! */
+    delete: (res, table, id)=> {
+
+        console.log(`${table}_id: ${id}`)
+
+        connect.execute(
+            `DELETE from ${table} WHERE ${table}_id = ${id};
+            SET @num := 0;
+            UPDATE ${table} SET ${table}_id = @num := (@num + 1);
+            ALTER TABLE ${table} AUTO_INCREMENT = 1;
+            `,
+            (error, dbres)=> {
+                if (!error) {
+                    res.send('Record Deleted')
+                } else {
+                    res.json({
+                        "error": true,
+                        "message": error
+                    })
+                }
+            }
+        )
+        
+        // prompt('Are you sure you want to delete?')
+
+        // do stuff
     }
 
 }

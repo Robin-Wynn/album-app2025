@@ -12,7 +12,7 @@ router.get('/', (req, res)=> {
 
 // Artist-Form => http://localhost:3000/artist-form
 router.get('/artist-form', (req, res)=> {
-    res.render('pages/artist-form', {
+    res.render('pages/artist-form', {  //Comes from .Router() object
         title: 'artist form',
         name: 'artist-form'
     })
