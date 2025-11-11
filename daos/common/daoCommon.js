@@ -40,17 +40,22 @@ const daoCommon = {
 
     create: (req, res, table)=> {
 
-        if (Object.keys(req.body).length ===0) {
-            // Object.keys(obj) => array of keys
+        // req.body => {}
+
+        if (Object.keys(req.body).length === 0) {
+            // Object.keys(obj) => array of keys or "properties"
             res.json({
                 "error": true,
                 "message": "No fields to create"
             })
         } else {
-            const fields = Object.keys(req.body)
+            // fields is the sql values
+            const fields = Object.keys(req.body) 
+            //Object.keys or Object.values returns an array
             const values = Object.values(req.body)
 
-            connect.execute(
+            // .execute can take 3 arguments
+            connect.execute(                  //.join works on arrays and strings, join text or something to string or item in array
                 `INSERT INTO ${table} SET ${fields.join(' = ?, ')} = ?;`,
                 values,
                 (error, dbres)=> {
@@ -67,6 +72,49 @@ const daoCommon = {
 
         // console.log(req)
         // res. send('complete') 
+    },
+
+    update: (req, res, table)=> {
+
+        // check if id == number
+        if (isNan(req.params.id)) {
+            res.json({
+                "error": true, 
+                "message": "ID must be a number"
+            })     // method on Object object{} that will return an array of properties
+        } else if (Object.keys(req.body).length == 0) {
+            res.json({
+                "error": true,
+                "message": "No fields to update"
+            })
+        } else {
+
+            const fields = Object.keys(req.body)
+            const values = Object.values(req.body)
+
+            connect.execute(
+                `UPDATE ${table}
+                    SET ${fields.join(' = ?, ')} = ? 
+                    WHERE ${table}_id = ?
+                ;`,
+                [...values, req.params.id],
+                (error, dbres)=> {
+                    if (!error) {
+                        // res.send(`Changed ${dbres.changedRows} row(s)`)
+                        res.json({
+                            "status": 'updated',
+                            "changedRows": dbres.changedRows
+                        })
+                    } else {
+                        // res.send('Error creating record')
+                        res.json({
+                            "error": true,
+                            "message": error
+                        })
+                    }
+                }
+            )
+        }
     }
 
 }

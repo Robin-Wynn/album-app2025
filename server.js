@@ -21,8 +21,12 @@ server.use(helmet.contentSecurityPolicy({
 }))
 
 server.use(cors())
+// allows us to parse a req, format it in json, and display it in an object
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
+
+// Hey, I'm using ejs as my view engine!
+server.set('view engine', 'ejs')
 
 // localhost:3000
 server.use('/', router)
