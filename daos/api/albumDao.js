@@ -49,6 +49,64 @@ const albumDao = {
             }
         )
 
+    },
+
+    createAlbum: (req, res, table)=> {
+
+        // capture fName, lName, band, and label
+        const fName = req.body.fName
+        const lName = req.body.lName
+        const band = req.body.band
+        const label = req.body.label
+
+        const data ={
+            artist_id: null,
+            band_id: null,
+            label_id: null
+        }
+
+        let artist = {}
+        // console.log(fName, lName, band, label)
+
+        // check in artist table
+        con.execute(
+            `SELECT * FROM artist;`,
+            (error, rows)=> {
+                if (!error) {
+                    // find artist where fName and lName are the same as artist.fName and artist.lName
+                    if (fName != null || lName != null) {
+                        artist = rows.find(artist => artist.fName == fName && artist.lName == lName)
+
+                        data.artist_id = artist.artist_id
+                        // if artist is undefined add artist to table
+                        if (artist == undefined) {
+                            con.execute(
+                                `INSERT INTO artist SET fName = "${fName}",
+                                lName = "${lName}";`,
+                                (error, dbres)=> {
+                                    if (!error) {
+                                        console.log(dbres.insertId)
+                                        data.artist_id = dbres.insertId
+                                        console.log(data.artist_id)
+                                    } else {
+                                        console.log(error)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                    // res.json({artist_id: data.artist_id})
+                }
+                
+            }
+        )
+        
+        data = {
+            artist_id: artist.artist_id,
+            band_id: null,
+            label_id: null
+        }
+        res.json(data)
     }
 
 }
